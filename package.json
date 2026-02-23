@@ -6,7 +6,8 @@
   "type": "commonjs",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "reset-password": "./reset-password.sh"
   },
   "dependencies": {
     "archiver": "^7.0.1",

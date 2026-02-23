@@ -6,10 +6,12 @@ A login-protected web app to backup and restore your OpenClaw config/state with 
 
 - Login screen (single admin user from `.env`)
 - Branded header with logo
+- Modern UI with **Light mode + Dark mode** toggle
 - One-click backup to ZIP
 - Restore from ZIP
 - Automatic **pre-restore emergency backup**
 - Download previous backups
+- Simple password reset command that prints the new password
 
 ## What gets backed up
 
@@ -41,6 +43,20 @@ npm start
 ```
 
 Open: `http://127.0.0.1:4280`
+
+## Password reset (easy)
+
+Generate and print a new password:
+
+```bash
+npm run reset-password
+```
+
+Or set a specific password:
+
+```bash
+./reset-password.sh "MyNewStrongPass123!"
+```
 
 ## Notes
 
