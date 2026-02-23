@@ -107,3 +107,11 @@ a:hover { text-decoration: underline; }
 .checkbox { display: flex; gap: 10px; align-items: center; }
 .checkbox input { width: auto; }
 pre { white-space: pre-wrap; font-size: 12px; }
+.footer {
+  margin-top: 18px;
+  text-align: center;
+  color: var(--muted);
+  font-size: .95rem;
+}
+.footer a { color: var(--muted); }
+.footer a:hover { color: var(--primary); }

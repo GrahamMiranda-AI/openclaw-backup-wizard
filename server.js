@@ -16,7 +16,7 @@ const APP_NAME = process.env.APP_NAME || 'OpenClaw Backup Wizard';
 const SESSION_SECRET = process.env.SESSION_SECRET || 'change-me';
 const ADMIN_USER = process.env.ADMIN_USER || 'admin';
 const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH || '';
-const LOGO_PATH = process.env.LOGO_PATH || '/logo.jpg';
+const LOGO_PATH = process.env.LOGO_PATH || '/static/logo.jpg';
 
 const HOME_DIR = process.env.HOME || '/root';
 const OPENCLAW_DIR = path.join(HOME_DIR, '.openclaw');
@@ -80,6 +80,9 @@ function renderPage({ title, body, status = '' }) {
     </header>
     ${status ? `<div class="status">${status}</div>` : ''}
     ${body}
+    <footer class="footer">
+      <a href="https://www.grahammiranda.com/" target="_blank" rel="noopener noreferrer">https://www.grahammiranda.com/</a>
+    </footer>
   </div>
   <script>
     (function () {

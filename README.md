@@ -1,6 +1,10 @@
 # OpenClaw Backup Wizard
 
-A login-protected web app to backup and restore your OpenClaw config/state with a simple wizard UI.
+<p align="center">
+  <img src="public/logo.jpg" alt="OpenClaw Backup Wizard Logo" width="110" />
+</p>
+
+A login-protected web app to backup and restore your OpenClaw config/state with a clean wizard UI.
 
 ## Features
 
@@ -12,10 +16,11 @@ A login-protected web app to backup and restore your OpenClaw config/state with 
 - Automatic **pre-restore emergency backup**
 - Download previous backups
 - Simple password reset command that prints the new password
+- Footer website link: `https://www.grahammiranda.com/`
 
 ## What gets backed up
 
-- `~/.openclaw` (full OpenClaw state)
+- `~/.openclaw` (filtered to important state/config)
 - Workspace config/memory files:
   - `AGENTS.md`, `SOUL.md`, `USER.md`, `TOOLS.md`, `IDENTITY.md`, `HEARTBEAT.md`, `MEMORY.md`
   - `memory/` directory
@@ -52,14 +57,18 @@ Generate and print a new password:
 npm run reset-password
 ```
 
-Or set a specific password:
+Set a specific password:
 
 ```bash
 ./reset-password.sh "MyNewStrongPass123!"
 ```
 
+## Branding
+
+- Default logo path: `LOGO_PATH=/static/logo.jpg`
+- Replace `public/logo.jpg` with your logo if needed.
+
 ## Notes
 
 - Restores overwrite current files.
 - The app creates `pre-restore-*.zip` before every restore.
-- If you want to change logo, set `LOGO_PATH` in `.env` and serve file via `/static` or adjust route.
