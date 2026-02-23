@@ -22,8 +22,9 @@ const HOME_DIR = process.env.HOME || '/root';
 const OPENCLAW_DIR = path.join(HOME_DIR, '.openclaw');
 const WORKSPACE_DIR = '/root/.openclaw/workspace';
 const BACKUP_DIR = path.join(__dirname, 'backups');
-const UPLOAD_DIR = path.join(__dirname, 'uploads');
-const TMP_RESTORE_DIR = path.join(__dirname, '.tmp-restore');
+const RUNTIME_DIR = path.join(__dirname, '.runtime');
+const UPLOAD_DIR = path.join(RUNTIME_DIR, 'uploads');
+const TMP_RESTORE_DIR = path.join(RUNTIME_DIR, 'restore');
 
 const WORKSPACE_FILES = [
   'AGENTS.md',
@@ -36,7 +37,7 @@ const WORKSPACE_FILES = [
   'memory'
 ];
 
-for (const p of [BACKUP_DIR, UPLOAD_DIR, TMP_RESTORE_DIR]) {
+for (const p of [BACKUP_DIR, RUNTIME_DIR, UPLOAD_DIR, TMP_RESTORE_DIR]) {
   fs.mkdirSync(p, { recursive: true });
 }
 
@@ -81,53 +82,72 @@ function renderPage({ title, body, status = '' }) {
 </html>`;
 }
 
-async function copyRecursive(src, dst) {
+async function copyRecursive(src, dst, options = {}) {
   await fsp.mkdir(path.dirname(dst), { recursive: true });
-  await fsp.cp(src, dst, { recursive: true, force: true });
+  await fsp.cp(src, dst, { recursive: true, force: true, ...options });
 }
 
-async function createSnapshotDir() {
-  const stamp = new Date().toISOString().replace(/[:.]/g, '-');
-  const snapshotRoot = path.join(__dirname, `.snapshot-${stamp}`);
-  await fsp.mkdir(snapshotRoot, { recursive: true });
-
-  const openclawTarget = path.join(snapshotRoot, 'openclaw_state');
-  if (fs.existsSync(OPENCLAW_DIR)) {
-    await copyRecursive(OPENCLAW_DIR, openclawTarget);
-  }
-
-  const workspaceTarget = path.join(snapshotRoot, 'workspace_files');
-  await fsp.mkdir(workspaceTarget, { recursive: true });
-  for (const rel of WORKSPACE_FILES) {
-    const src = path.join(WORKSPACE_DIR, rel);
-    if (fs.existsSync(src)) {
-      await copyRecursive(src, path.join(workspaceTarget, rel));
-    }
-  }
-
+async function createBackupZip(outFile) {
   const manifest = {
     createdAt: new Date().toISOString(),
     app: APP_NAME,
+    format: 'openclaw-backup-wizard-v1',
     includes: {
       openclawState: OPENCLAW_DIR,
       workspace: WORKSPACE_FILES
     }
   };
-  await fsp.writeFile(path.join(snapshotRoot, 'manifest.json'), JSON.stringify(manifest, null, 2), 'utf8');
 
-  return snapshotRoot;
-}
+  const openclawIgnores = [
+    // Huge/transient runtime data (not configuration)
+    'browser/**',
+    'logs/**',
+    'media/**',
+    'delivery-queue/**',
+    'subagents/**',
+    'agents/**',
+    'cron/runs/**',
+    'backups/**',
 
-async function zipDir(sourceDir, outFile) {
+    // Workspace clone data is backed up separately via WORKSPACE_FILES
+    'workspace/**',
+    'workspace-gateway-*/**'
+  ];
+
   await new Promise((resolve, reject) => {
     const output = fs.createWriteStream(outFile);
     const archive = archiver('zip', { zlib: { level: 9 } });
 
     output.on('close', resolve);
+    output.on('error', reject);
     archive.on('error', reject);
 
     archive.pipe(output);
-    archive.directory(sourceDir, false);
+
+    if (fs.existsSync(OPENCLAW_DIR)) {
+      archive.glob('**/*', {
+        cwd: OPENCLAW_DIR,
+        dot: true,
+        ignore: openclawIgnores
+      }, {
+        prefix: 'openclaw_state/'
+      });
+    }
+
+    for (const rel of WORKSPACE_FILES) {
+      const src = path.join(WORKSPACE_DIR, rel);
+      if (!fs.existsSync(src)) continue;
+
+      const stats = fs.statSync(src);
+      const dst = path.posix.join('workspace_files', rel.replace(/\\/g, '/'));
+      if (stats.isDirectory()) {
+        archive.directory(src, dst);
+      } else {
+        archive.file(src, { name: dst });
+      }
+    }
+
+    archive.append(JSON.stringify(manifest, null, 2), { name: 'manifest.json' });
     archive.finalize();
   });
 }
@@ -229,11 +249,9 @@ app.get('/wizard', isAuthed, async (req, res) => {
 app.post('/backup', isAuthed, async (req, res) => {
   try {
     const stamp = new Date().toISOString().replace(/[:.]/g, '-');
-    const snapshotDir = await createSnapshotDir();
     const backupFile = path.join(BACKUP_DIR, `openclaw-backup-${stamp}.zip`);
 
-    await zipDir(snapshotDir, backupFile);
-    await removePath(snapshotDir);
+    await createBackupZip(backupFile);
 
     res.redirect(`/wizard?ok=${encodeURIComponent(`Backup created: ${path.basename(backupFile)}`)}`);
   } catch (err) {
@@ -253,10 +271,8 @@ app.post('/restore', isAuthed, upload.single('backup'), async (req, res) => {
     if (!req.file) throw new Error('No backup uploaded');
     if (req.body.confirm !== 'yes') throw new Error('Confirmation required');
 
-    const preRestoreSnapshot = await createSnapshotDir();
     const preRestoreFile = path.join(BACKUP_DIR, `pre-restore-${new Date().toISOString().replace(/[:.]/g, '-')}.zip`);
-    await zipDir(preRestoreSnapshot, preRestoreFile);
-    await removePath(preRestoreSnapshot);
+    await createBackupZip(preRestoreFile);
 
     await removePath(TMP_RESTORE_DIR);
     await fsp.mkdir(TMP_RESTORE_DIR, { recursive: true });

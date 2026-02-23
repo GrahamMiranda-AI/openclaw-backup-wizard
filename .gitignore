@@ -3,4 +3,5 @@ node_modules/
 uploads/
 .tmp-restore/
 .snapshot-*/
+.runtime/
 backups/*.zip
