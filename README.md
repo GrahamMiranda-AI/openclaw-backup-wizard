@@ -4,7 +4,11 @@
   <img src="public/logo.jpg" alt="OpenClaw Backup Wizard Logo" width="110" />
 </p>
 
+<p align="center"><strong>Project by Graham Miranda</strong> · <a href="https://www.grahammiranda.com/">https://www.grahammiranda.com/</a></p>
+
 A login-protected web app to backup and restore your OpenClaw config/state with a clean wizard UI.
+
+**Project by Graham Miranda:** https://www.grahammiranda.com/
 
 ## Features
 
@@ -15,6 +19,7 @@ A login-protected web app to backup and restore your OpenClaw config/state with 
 - Restore from ZIP
 - Automatic **pre-restore emergency backup**
 - Download previous backups
+- Delete old backups directly from the wizard
 - Simple password reset command that prints the new password
 - Footer website link: `https://www.grahammiranda.com/`
 

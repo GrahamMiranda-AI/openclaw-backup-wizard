@@ -81,6 +81,7 @@ function renderPage({ title, body, status = '' }) {
     ${status ? `<div class="status">${status}</div>` : ''}
     ${body}
     <footer class="footer">
+      <span>Project by Graham Miranda </span>
       <a href="https://www.grahammiranda.com/" target="_blank" rel="noopener noreferrer">https://www.grahammiranda.com/</a>
     </footer>
   </div>
@@ -235,7 +236,15 @@ app.get('/wizard', isAuthed, async (req, res) => {
   }
 
   const list = backups.length
-    ? `<ul>${backups.map(b => `<li><a href="/download/${encodeURIComponent(b)}">${b}</a></li>`).join('')}</ul>`
+    ? `<ul class="backup-list">${backups.map(b => `
+      <li>
+        <a href="/download/${encodeURIComponent(b)}">${b}</a>
+        <form method="post" action="/delete-backup" onsubmit="return confirm('Delete backup ${b}?');">
+          <input type="hidden" name="name" value="${b}" />
+          <button type="submit" class="danger ghost">Delete</button>
+        </form>
+      </li>
+    `).join('')}</ul>`
     : '<p>No backups yet.</p>';
 
   const body = `
@@ -288,6 +297,25 @@ app.get('/download/:name', isAuthed, async (req, res) => {
   const file = path.join(BACKUP_DIR, target);
   if (!fs.existsSync(file)) return res.status(404).send('Not found');
   res.download(file);
+});
+
+app.post('/delete-backup', isAuthed, async (req, res) => {
+  try {
+    const target = path.basename(String(req.body?.name || ''));
+    if (!target.endsWith('.zip')) {
+      return res.redirect(`/wizard?ok=${encodeURIComponent('Invalid backup name.')}`);
+    }
+
+    const file = path.join(BACKUP_DIR, target);
+    if (!fs.existsSync(file)) {
+      return res.redirect(`/wizard?ok=${encodeURIComponent('Backup not found.')}`);
+    }
+
+    await fsp.unlink(file);
+    return res.redirect(`/wizard?ok=${encodeURIComponent(`Backup deleted: ${target}`)}`);
+  } catch (err) {
+    return res.status(500).send(renderPage({ title: `${APP_NAME} - Delete Error`, body: `<pre>${String(err.stack || err)}</pre>` }));
+  }
 });
 
 app.post('/restore', isAuthed, upload.single('backup'), async (req, res) => {
