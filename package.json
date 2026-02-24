@@ -2,11 +2,12 @@
   "name": "openclaw-backup-wizard",
   "version": "1.0.0",
   "description": "Backup/Restore wizard for OpenClaw config",
-  "main": "server.js",
-  "type": "commonjs",
+  "main": "src/index.js",
+  "type": "module",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js",
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "reset-password": "./reset-password.sh"
   },
   "dependencies": {
@@ -14,9 +15,16 @@
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
     "express": "^4.19.2",
+    "express-rate-limit": "^7.2.0",
     "express-session": "^1.18.0",
+    "helmet": "^7.1.0",
     "multer": "^2.0.2",
     "unzipper": "^0.12.3"
+  },
+  "devDependencies": {
+    "jest": "^30.2.0",
+    "supertest": "^7.2.2"
   }
 }
