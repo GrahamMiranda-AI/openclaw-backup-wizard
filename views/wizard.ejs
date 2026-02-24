@@ -1,0 +1,43 @@
+<%- include('partials/header') %>
+    <div class="grid fade-in">
+      <section class="card">
+        <h2>Step 1 — Create backup</h2>
+        <p>Backs up OpenClaw state + key workspace memory/config files into a ZIP.</p>
+        <form method="post" action="/backup"><button type="submit">Backup now</button></form>
+      </section>
+
+      <section class="card">
+        <h2>Step 2 — Restore backup</h2>
+        <p>Uploads a ZIP from this wizard format and restores files. A pre-restore emergency backup is generated automatically.</p>
+        <form method="post" action="/restore" enctype="multipart/form-data" class="stack">
+          <input type="file" name="backup" accept=".zip" required />
+          <label class="checkbox"><input type="checkbox" required name="confirm" value="yes" /> I understand this will overwrite current OpenClaw files.</label>
+          <button type="submit" class="danger">Restore backup</button>
+        </form>
+      </section>
+
+      <section class="card">
+        <h2>Backups</h2>
+        <% if (locals.backups && backups.length > 0) { %>
+          <ul class="backup-list">
+          <% backups.forEach(b => { %>
+            <li>
+              <a href="/download/<%= encodeURIComponent(b) %>"><%= b %></a>
+              <form method="post" action="/delete-backup" onsubmit="return confirm('Delete backup <%= b %>?');">
+                <input type="hidden" name="name" value="<%= b %>" />
+                <button type="submit" class="danger ghost">Delete</button>
+              </form>
+            </li>
+          <% }); %>
+          </ul>
+        <% } else { %>
+          <p>No backups yet.</p>
+        <% } %>
+      </section>
+
+      <section class="card">
+        <h2>Session</h2>
+        <form method="post" action="/logout"><button type="submit">Logout</button></form>
+      </section>
+    </div>
+<%- include('partials/footer') %>

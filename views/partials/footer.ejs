@@ -1,0 +1,27 @@
+    <footer class="footer">
+      <span>Project by Graham Miranda </span>
+      <a href="https://www.grahammiranda.com/" target="_blank" rel="noopener noreferrer">https://www.grahammiranda.com/</a>
+    </footer>
+  </div>
+  <script>
+    (function () {
+      const KEY = 'ocbw-theme';
+      const root = document.documentElement;
+      const btn = document.getElementById('themeToggle');
+      const stored = localStorage.getItem(KEY);
+      const preferredDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = stored || (preferredDark ? 'dark' : 'light');
+      root.setAttribute('data-theme', theme);
+      if (btn) btn.textContent = theme === 'dark' ? '☀️ Light' : '🌙 Dark';
+      if (btn) {
+        btn.addEventListener('click', function () {
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          localStorage.setItem(KEY, next);
+          btn.textContent = next === 'dark' ? '☀️ Light' : '🌙 Dark';
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title><%= locals.title %></title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <script src="https://unpkg.com/htmx.org@2.0.0" integrity="sha384-wS5l5IKJBvK6sPTKa2WZ1js3d947pvWXbPJ1OmWJ28dztMN91YE74cOji0CpnGEZb" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <img src="<%= locals.LOGO_PATH %>" onerror="this.style.display='none'" class="logo" alt="logo" />
+        <h1><%= locals.APP_NAME %></h1>
+      </div>
+      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙 Dark</button>
+    </header>
+    <% if (locals.status) { %>
+      <div class="status"><%= status %></div>
+    <% } %>
+    <% if (locals.error) { %>
+      <div class="status error"><%= error %></div>
+    <% } %>
