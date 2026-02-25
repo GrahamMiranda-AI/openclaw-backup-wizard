@@ -5,3 +5,4 @@ uploads/
 .snapshot-*/
 .runtime/
 backups/*.zip
+server.log

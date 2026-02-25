@@ -1,0 +1,23 @@
+
+> openclaw-backup-wizard@1.0.0 start
+> node server.js
+
+OpenClaw Backup Wizard running on http://127.0.0.1:4280
+::ffff:127.0.0.1 - - [25/Feb/2026:17:59:10 +0000] "GET /login HTTP/1.1" 200 - "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.4 Safari/537.36"
+::ffff:127.0.0.1 - - [25/Feb/2026:17:59:10 +0000] "GET /static/style.css HTTP/1.1" 200 - "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.4 Safari/537.36"
+::ffff:127.0.0.1 - - [25/Feb/2026:17:59:10 +0000] "GET /static/script.js HTTP/1.1" 200 - "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.4 Safari/537.36"
+::ffff:127.0.0.1 - - [25/Feb/2026:17:59:10 +0000] "GET /static/logo.jpg HTTP/1.1" 200 491748 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.4 Safari/537.36"
+::ffff:127.0.0.1 - - [25/Feb/2026:17:59:11 +0000] "POST /login HTTP/1.1" 302 36 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.4 Safari/537.36"
+::ffff:127.0.0.1 - - [25/Feb/2026:17:59:11 +0000] "GET /wizard HTTP/1.1" 200 - "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.4 Safari/537.36"
+::ffff:127.0.0.1 - - [25/Feb/2026:17:59:11 +0000] "GET /static/style.css HTTP/1.1" 304 - "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.4 Safari/537.36"
+::ffff:127.0.0.1 - - [25/Feb/2026:17:59:11 +0000] "GET /static/script.js HTTP/1.1" 304 - "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.4 Safari/537.36"
+::ffff:127.0.0.1 - - [25/Feb/2026:17:59:11 +0000] "GET /static/logo.jpg HTTP/1.1" 304 - "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.4 Safari/537.36"
+::ffff:127.0.0.1 - - [25/Feb/2026:18:00:16 +0000] "GET /login HTTP/1.1" 200 - "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.4 Safari/537.36"
+::ffff:127.0.0.1 - - [25/Feb/2026:18:00:16 +0000] "GET /static/style.css HTTP/1.1" 200 - "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.4 Safari/537.36"
+::ffff:127.0.0.1 - - [25/Feb/2026:18:00:16 +0000] "GET /static/script.js HTTP/1.1" 200 - "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.4 Safari/537.36"
+::ffff:127.0.0.1 - - [25/Feb/2026:18:00:16 +0000] "GET /static/logo.jpg HTTP/1.1" 200 491748 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.4 Safari/537.36"
+::ffff:127.0.0.1 - - [25/Feb/2026:18:00:16 +0000] "POST /login HTTP/1.1" 302 36 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.4 Safari/537.36"
+::ffff:127.0.0.1 - - [25/Feb/2026:18:00:16 +0000] "GET /wizard HTTP/1.1" 200 - "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.4 Safari/537.36"
+::ffff:127.0.0.1 - - [25/Feb/2026:18:00:16 +0000] "GET /static/style.css HTTP/1.1" 304 - "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.4 Safari/537.36"
+::ffff:127.0.0.1 - - [25/Feb/2026:18:00:16 +0000] "GET /static/script.js HTTP/1.1" 304 - "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.4 Safari/537.36"
+::ffff:127.0.0.1 - - [25/Feb/2026:18:00:16 +0000] "GET /static/logo.jpg HTTP/1.1" 304 - "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.4 Safari/537.36"
