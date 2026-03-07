@@ -1,0 +1,41 @@
+import path from 'path';
+import fs from 'fs';
+
+export const PORT = Number(process.env.PORT || 4280);
+export const APP_NAME = process.env.APP_NAME || 'OpenClaw Backup Wizard';
+export const SESSION_SECRET = process.env.SESSION_SECRET || 'change-me';
+export const ADMIN_USER = process.env.ADMIN_USER || 'admin';
+export const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH || '';
+export const LOGO_PATH = process.env.LOGO_PATH || '/static/logo.jpg';
+
+export const HOME_DIR = process.env.HOME || '/root';
+export const OPENCLAW_DIR = path.join(HOME_DIR, '.openclaw');
+export const WORKSPACE_DIR = '/root/.openclaw/workspace';
+
+// Using import.meta.dirname for modern Node.js instead of __dirname
+const __dirname = import.meta.dirname;
+
+// Move up one directory since this file will be in src/
+const PROJECT_ROOT = path.join(__dirname, '..');
+
+export const BACKUP_DIR = path.join(PROJECT_ROOT, 'backups');
+export const RUNTIME_DIR = path.join(PROJECT_ROOT, '.runtime');
+export const UPLOAD_DIR = path.join(RUNTIME_DIR, 'uploads');
+export const TMP_RESTORE_DIR = path.join(RUNTIME_DIR, 'restore');
+
+export const WORKSPACE_FILES = [
+  'AGENTS.md',
+  'SOUL.md',
+  'USER.md',
+  'TOOLS.md',
+  'IDENTITY.md',
+  'HEARTBEAT.md',
+  'MEMORY.md',
+  'memory'
+];
+
+export function ensureDirectories() {
+  for (const p of [BACKUP_DIR, RUNTIME_DIR, UPLOAD_DIR, TMP_RESTORE_DIR]) {
+    fs.mkdirSync(p, { recursive: true });
+  }
+}
