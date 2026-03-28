@@ -1,0 +1,5 @@
+
+> openclaw-backup-wizard@1.0.0 start
+> node server.js
+
+OpenClaw Backup Wizard running on http://127.0.0.1:4280
