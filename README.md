@@ -41,7 +41,7 @@ cp .env.example .env
 Generate password hash:
 
 ```bash
-node -e "console.log(require('bcryptjs').hashSync('your-strong-password',10))"
+node -e "import('bcryptjs').then(bcrypt => console.log(bcrypt.default.hashSync('your-strong-password',10)))"
 ```
 
 Put the hash in `.env` as `ADMIN_PASSWORD_HASH`.
