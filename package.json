@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Backup/Restore wizard for OpenClaw config",
   "main": "server.js",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
@@ -18,5 +18,8 @@
     "express-session": "^1.18.0",
     "multer": "^2.0.2",
     "unzipper": "^0.12.3"
+  },
+  "devDependencies": {
+    "supertest": "^7.2.2"
   }
 }
