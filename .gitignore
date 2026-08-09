@@ -5,3 +5,5 @@ uploads/
 .snapshot-*/
 .runtime/
 backups/*.zip
+npm_output.log
+npm_output2.log
